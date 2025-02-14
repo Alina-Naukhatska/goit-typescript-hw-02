@@ -7,6 +7,7 @@ interface ImageGalleryProps {
     id: string;
     urls: {
       small: string;
+      regular?: string; 
     };
     alt_description: string;
   }[];
@@ -18,7 +19,16 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ photos, onImageClick }) => 
     <ul className={s.ul}>
       {photos.map(item => (
         <li className={s.li} key={item.id}>
-          <ImageCard item={item} onImageClick={onImageClick} />
+          <ImageCard
+            item={{
+              ...item,
+              urls: {
+                ...item.urls,
+                regular: item.urls.regular || '',
+              },
+            }}
+            onImageClick={onImageClick}
+          />
         </li>
       ))}
     </ul>
